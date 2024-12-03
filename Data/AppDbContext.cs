@@ -1,4 +1,6 @@
 ﻿using CrediBill_ASP.Models;
+using Microsoft.EntityFrameworkCore;
+using Credibill_ASP.Models;
 
 namespace Credibill_ASP.Data
 {
@@ -48,6 +50,7 @@ namespace Credibill_ASP.Data
                 modelBuilder.Entity<Payment>()
                     .HasQueryFilter(p => p.Deleted == DateTime.MaxValue);
             }
+            public DbSet<Credibill_ASP.Models.Language> Language { get; set; }
         }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.CodeAnalysis.Host;
 
 namespace CrediBill_ASP.Data
 {
@@ -87,6 +88,19 @@ namespace CrediBill_ASP.Data
                     );
                     context.SaveChanges();
                 }
+                if (!context.Language.Any())
+                {
+                    context.Language.AddRange(
+                        new Language(),
+                        new Language { Code = "en", IsSystemLanguage = true, Name = "English" },
+                        new Language { Code = "nl", IsSystemLanguage = true, Name = "Dutch" },
+                        new Language { Code = "fr", IsSystemLanguage = true, Name = "French" },
+                        new Language { Code = "de", IsSystemLanguage = true, Name = "German" });
+                    context.SaveChanges();
+
+                }
+
+                Language.Languages = context.Language.Where(l => l.IsSystemLanguage && l.Code != "?").ToList();
             }
         }
     }
