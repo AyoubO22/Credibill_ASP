@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Credibill_ASP.Data.CrediBill_Web.Data;
+using Credibill_ASP.Models;
+using CrediBill_ASP.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using CrediBill_ASP.Models;
-using Credibill_ASP.Data.CrediBill_Web.Data;
-using Credibill_ASP.Models;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CrediBill_ASP.Data
 {

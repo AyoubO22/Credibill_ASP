@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Credibill_ASP.Data.CrediBill_Web.Data;
+﻿using Credibill_ASP.Data.CrediBill_Web.Data;
 using Credibill_ASP.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 namespace Credibill_ASP.Controllers
 {
@@ -68,7 +65,6 @@ namespace Credibill_ASP.Controllers
                 return View(customer);
             }
         }
-
 
         // GET: Customers/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -138,7 +134,6 @@ namespace Credibill_ASP.Controllers
 
             return View(customer);
         }
-
 
         // POST: Customers/Delete/5
         [HttpPost, ActionName("Delete")]

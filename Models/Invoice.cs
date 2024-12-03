@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Credibill_ASP.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Credibill_ASP.Models;
 
 namespace CrediBill_ASP.Models
 {
@@ -19,6 +19,7 @@ namespace CrediBill_ASP.Models
 
         // Relaties
         public int CustomerId { get; set; }
+
         public Customer Customer { get; set; }
 
         public ICollection<Payment> Payments { get; set; }

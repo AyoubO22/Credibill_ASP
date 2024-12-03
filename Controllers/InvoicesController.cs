@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Credibill_ASP.Data.CrediBill_Web.Data;
+using CrediBill_ASP.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CrediBill_ASP.Models;
-using Credibill_ASP.Data.CrediBill_Web.Data;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Credibill_ASP.Controllers
 {
@@ -36,21 +35,27 @@ namespace Credibill_ASP.Controllers
                 case "AmountAsc":
                     query = query.OrderBy(i => i.Amount);
                     break;
+
                 case "AmountDesc":
                     query = query.OrderByDescending(i => i.Amount);
                     break;
+
                 case "InvoiceDateAsc":
                     query = query.OrderBy(i => i.InvoiceDate);
                     break;
+
                 case "InvoiceDateDesc":
                     query = query.OrderByDescending(i => i.InvoiceDate);
                     break;
+
                 case "CustomerAsc":
                     query = query.OrderBy(i => i.Customer.Email);
                     break;
+
                 case "CustomerDesc":
                     query = query.OrderByDescending(i => i.Customer.Email);
                     break;
+
                 default:
                     query = query.OrderBy(i => i.Id);
                     break;
@@ -59,8 +64,6 @@ namespace Credibill_ASP.Controllers
             var invoices = await query.ToListAsync();
             return View(invoices);
         }
-
-
 
         // GET: Invoices/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -187,7 +190,6 @@ namespace Credibill_ASP.Controllers
             return View(invoice);
         }
 
-
         // POST: Invoices/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -203,7 +205,5 @@ namespace Credibill_ASP.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
     }
-
 }

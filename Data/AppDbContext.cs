@@ -50,5 +50,4 @@ namespace Credibill_ASP.Data
             }
         }
     }
-
 }
