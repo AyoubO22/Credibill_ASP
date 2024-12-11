@@ -22,7 +22,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using SQLitePCL;
 
-namespace GroupBudget_Web.Areas.Identity.Pages.Account
+namespace CrediBill_ASP_Web.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CrediBill_ASP.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Credibill_ASP.Data.CrediBill_Web.Data;
+using Credibill_ASP.Data;
 using Credibill_ASP.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;

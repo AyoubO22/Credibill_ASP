@@ -1,10 +1,11 @@
-﻿using Credibill_ASP.Data.CrediBill_Web.Data;
+﻿using Credibill_ASP.Data;
 using Credibill_ASP.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CrediBill_ASP.Data;
 
 namespace Credibill_ASP.APIControllers
 {

@@ -1,10 +1,11 @@
-﻿using Credibill_ASP.Data.CrediBill_Web.Data;
+﻿using Credibill_ASP.Data;
 using CrediBill_ASP.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
+using CrediBill_ASP.Data;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Credibill_ASP.Controllers

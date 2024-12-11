@@ -1,99 +1,94 @@
-﻿using Credibill_ASP.Data;
-using Credibill_ASP.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using CrediBill_ASP.Data;
-using Microsoft.AspNetCore.Authorization;
+using GroupBudget_Web.ViewModels;
 
 namespace Credibill_ASP.Controllers
 {
-    [Authorize]
-    public class CustomersController : Controller
+    public class UserViewModelsController : Controller
     {
-
         private readonly AppDbContext _context;
 
-        public CustomersController(AppDbContext context)
+        public UserViewModelsController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: Customers
+        // GET: UserViewModels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Customers.ToListAsync());
+            return View(await _context.UserViewModel.ToListAsync());
         }
 
-        // GET: Customers/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: UserViewModels/Details/5
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customers
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
+            var userViewModel = await _context.UserViewModel
+                .FirstOrDefaultAsync(m => m.UserId == id);
+            if (userViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(userViewModel);
         }
 
-        // GET: Customers/Create
+        // GET: UserViewModels/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Customers/Create
+        // POST: UserViewModels/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,CreatedDate,Deleted")] Customer customer)
+        public async Task<IActionResult> Create([Bind("UserId,UserName,UserEmail,Name,Roles,IsBlocked")] UserViewModel userViewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
+                _context.Add(userViewModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            else
-            {
-                // Vous pouvez ajouter un log ici ou afficher un message pour vérifier les erreurs
-                return View(customer);
-            }
+            return View(userViewModel);
         }
 
-        // GET: Customers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: UserViewModels/Edit/5
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
+            var userViewModel = await _context.UserViewModel.FindAsync(id);
+            if (userViewModel == null)
             {
                 return NotFound();
             }
-            return View(customer);
+            return View(userViewModel);
         }
 
-        // POST: Customers/Edit/5
+        // POST: UserViewModels/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,CreatedDate,Deleted")] Customer customer)
+        public async Task<IActionResult> Edit(string id, [Bind("UserId,UserName,UserEmail,Name,Roles,IsBlocked")] UserViewModel userViewModel)
         {
-            if (id != customer.Id)
+            if (id != userViewModel.UserId)
             {
                 return NotFound();
             }
@@ -102,12 +97,12 @@ namespace Credibill_ASP.Controllers
             {
                 try
                 {
-                    _context.Update(customer);
+                    _context.Update(userViewModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!await CustomerExists(customer.Id))
+                    if (!UserViewModelExists(userViewModel.UserId))
                     {
                         return NotFound();
                     }
@@ -118,45 +113,45 @@ namespace Credibill_ASP.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return View(userViewModel);
         }
 
-        // GET: Customers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: UserViewModels/Delete/5
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customers
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
+            var userViewModel = await _context.UserViewModel
+                .FirstOrDefaultAsync(m => m.UserId == id);
+            if (userViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(userViewModel);
         }
 
-        // POST: Customers/Delete/5
+        // POST: UserViewModels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer != null)
+            var userViewModel = await _context.UserViewModel.FindAsync(id);
+            if (userViewModel != null)
             {
-                customer.Deleted = DateTime.Now; // Markeer als verwijderd
-                _context.Update(customer);
-                await _context.SaveChangesAsync();
+                _context.UserViewModel.Remove(userViewModel);
             }
+
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private async Task<bool> CustomerExists(int id)
+        private bool UserViewModelExists(string id)
         {
-            return await _context.Customers.AnyAsync(e => e.Id == id);
+            return _context.UserViewModel.Any(e => e.UserId == id);
         }
     }
 }

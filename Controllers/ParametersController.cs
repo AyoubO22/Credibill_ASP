@@ -1,99 +1,94 @@
-﻿using Credibill_ASP.Data;
-using Credibill_ASP.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using CrediBill_ASP.Data;
-using Microsoft.AspNetCore.Authorization;
+using Credibill_ASP.Models;
 
 namespace Credibill_ASP.Controllers
 {
-    [Authorize]
-    public class CustomersController : Controller
+    public class ParametersController : Controller
     {
-
         private readonly AppDbContext _context;
 
-        public CustomersController(AppDbContext context)
+        public ParametersController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: Customers
+        // GET: Parameters
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Customers.ToListAsync());
+            return View(await _context.Parameter.ToListAsync());
         }
 
-        // GET: Customers/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Parameters/Details/5
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customers
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
+            var parameter = await _context.Parameter
+                .FirstOrDefaultAsync(m => m.Name == id);
+            if (parameter == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(parameter);
         }
 
-        // GET: Customers/Create
+        // GET: Parameters/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Customers/Create
+        // POST: Parameters/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,CreatedDate,Deleted")] Customer customer)
+        public async Task<IActionResult> Create([Bind("Name,Value,Description,UserId,LastChanged,Obsolete,Destination")] Parameter parameter)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
+                _context.Add(parameter);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            else
-            {
-                // Vous pouvez ajouter un log ici ou afficher un message pour vérifier les erreurs
-                return View(customer);
-            }
+            return View(parameter);
         }
 
-        // GET: Customers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: Parameters/Edit/5
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
+            var parameter = await _context.Parameter.FindAsync(id);
+            if (parameter == null)
             {
                 return NotFound();
             }
-            return View(customer);
+            return View(parameter);
         }
 
-        // POST: Customers/Edit/5
+        // POST: Parameters/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,CreatedDate,Deleted")] Customer customer)
+        public async Task<IActionResult> Edit(string id, [Bind("Name,Value,Description,UserId,LastChanged,Obsolete,Destination")] Parameter parameter)
         {
-            if (id != customer.Id)
+            if (id != parameter.Name)
             {
                 return NotFound();
             }
@@ -102,12 +97,12 @@ namespace Credibill_ASP.Controllers
             {
                 try
                 {
-                    _context.Update(customer);
+                    _context.Update(parameter);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!await CustomerExists(customer.Id))
+                    if (!ParameterExists(parameter.Name))
                     {
                         return NotFound();
                     }
@@ -118,45 +113,45 @@ namespace Credibill_ASP.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return View(parameter);
         }
 
-        // GET: Customers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: Parameters/Delete/5
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customers
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
+            var parameter = await _context.Parameter
+                .FirstOrDefaultAsync(m => m.Name == id);
+            if (parameter == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(parameter);
         }
 
-        // POST: Customers/Delete/5
+        // POST: Parameters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer != null)
+            var parameter = await _context.Parameter.FindAsync(id);
+            if (parameter != null)
             {
-                customer.Deleted = DateTime.Now; // Markeer als verwijderd
-                _context.Update(customer);
-                await _context.SaveChangesAsync();
+                _context.Parameter.Remove(parameter);
             }
+
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private async Task<bool> CustomerExists(int id)
+        private bool ParameterExists(string id)
         {
-            return await _context.Customers.AnyAsync(e => e.Id == id);
+            return _context.Parameter.Any(e => e.Name == id);
         }
     }
 }

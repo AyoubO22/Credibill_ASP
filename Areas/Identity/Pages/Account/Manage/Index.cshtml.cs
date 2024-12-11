@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace GroupBudget_Web.Areas.Identity.Pages.Account.Manage
+namespace CrediBill_ASP_Web.Areas.Identity.Pages.Account.Manage
 {
     public class IndexModel : PageModel
     {

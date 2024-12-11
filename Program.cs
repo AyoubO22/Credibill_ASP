@@ -1,15 +1,19 @@
 using System;
-using Credibill_ASP.Data.CrediBill_Web.Data;
+using CB_Web.Services;
+using Credibill_ASP.Data;
 using CrediBill_ASP.Data;
 using Credibill_ASP.Models;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using NETCore.MailKit.Infrastructure.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +32,29 @@ builder.Services.AddMvc()
     .AddDataAnnotationsLocalization();
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient<IEmailSender, MailKitEmailSender>();
+builder.Services.Configure<MailKitOptions>
+(
+    options =>
+    {
+        //Option 1:  Rubbish, as this information is hardcoded
+        //options.Server = "ServierName";
+        //options.Port = Convert.ToInt32("465");
+        //options.Account ="MyAccount";
+        //options.Password = "Abc!12345";
+        //options.SenderEmail = "Admin@GroupBudget.be";
+        //options.SenderName = "Administrator";
+
+        // Option 2:  Dangerous, as information is available for anyone having access to appsettings.json
+        //options.Server = builder.Configuration["ExternalProviders:MailKit:SMTP:Address"];
+        //options.Port = Convert.ToInt32(builder.Configuration["ExternalProviders:MailKit:SMTP:Port"]);
+        //options.Account = builder.Configuration["ExternalProviders:MailKit:SMTP:Account"];
+        //options.Password = builder.Configuration["ExternalProviders:MailKit:SMTP:Password"];
+        //options.SenderEmail = builder.Configuration["ExternalProviders:MailKit:SMTP:SenderEmail"];
+        //options.SenderName = builder.Configuration["ExternalProviders:MailKit:SMTP:SenderName"];
+    }
+);
 
 // Voeg de nodige services toe voor de API en Swagger
 builder.Services.AddControllers(); // Voor API-functionaliteit
