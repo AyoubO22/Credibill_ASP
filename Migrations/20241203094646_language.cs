@@ -5,7 +5,7 @@
 namespace Credibill_ASP.Migrations
 {
     /// <inheritdoc />
-    public partial class language : Migration
+    public partial class Language : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

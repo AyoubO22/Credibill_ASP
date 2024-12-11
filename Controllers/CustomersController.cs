@@ -4,11 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Credibill_ASP.Controllers
 {
+    [Authorize]
     public class CustomersController : Controller
     {
+
         private readonly AppDbContext _context;
 
         public CustomersController(AppDbContext context)

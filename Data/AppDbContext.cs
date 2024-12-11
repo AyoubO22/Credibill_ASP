@@ -12,7 +12,7 @@ namespace Credibill_ASP.Data
 
     namespace CrediBill_Web.Data
     {
-        public class AppDbContext : IdentityDbContext<IdentityUser>
+        public class AppDbContext : IdentityDbContext<CredibillUser>
         {
             public DbSet<Customer> Customers { get; set; }
             public DbSet<Invoice> Invoices { get; set; }

@@ -6,7 +6,7 @@ using System;
 namespace Credibill_ASP.Migrations
 {
     /// <inheritdoc />
-    public partial class identity : Migration
+    public partial class Identity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

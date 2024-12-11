@@ -16,7 +16,9 @@ namespace Credibill_ASP.Models
         [ForeignKey("Languages")]
         public string Languagecode { get; set; } = "?";
 
-
-
+        public override string ToString()
+        {
+            return FirstName + " " + LastName; 
+        }
     }
 }
