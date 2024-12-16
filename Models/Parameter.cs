@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using CrediBill_ASP.Data;
 using Credibill_ASP.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace Credibill_ASP.Models
@@ -60,7 +61,7 @@ namespace Credibill_ASP.Models
 
         public static void ConfigureMail()
         {
-            MailKitEmailSender mailSender = (MailKitEmailSender)Globals.app.Services.GetService(typeof(MailKitEmailSender));
+            MailKitEmailSender mailSender = (MailKitEmailSender)Globals.App.Services.GetService<IEmailSender>();
             var options = mailSender.Options;
             options.Server = Parameters["Mail.Server"].Value;
             options.Port = Convert.ToInt32(Parameters["Mail.Port"].Value);

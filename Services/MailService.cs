@@ -1,4 +1,5 @@
-﻿using MailKit.Net.Smtp;
+﻿using System;
+using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
@@ -28,6 +29,11 @@ namespace CB_Web.Services
             // create message
             var email = new MimeMessage();
             email.Sender = MailboxAddress.Parse(Options.SenderEmail);
+            if (string.IsNullOrEmpty(Options.SenderEmail))
+            {
+                throw new ArgumentNullException(nameof(Options.SenderEmail), "Sender email cannot be null or empty.");
+            }
+            email.Sender = MailboxAddress.Parse(Options.SenderEmail);
             if (!string.IsNullOrEmpty(Options.SenderName))
                 email.Sender.Name = Options.SenderName;
             email.From.Add(email.Sender);
@@ -46,6 +52,8 @@ namespace CB_Web.Services
                     else
                         Security = SecureSocketOptions.SslOnConnect;
                 }
+
+                
                 smtp.Connect(Options.Server, Options.Port, Security);
                 smtp.Authenticate(Options.Account, Options.Password);
                 smtp.Send(email);

@@ -7,6 +7,6 @@ namespace Credibill_ASP.Data
     {
         public static CredibillUser DefaultUser;
 
-        public static WebApplication app;
+        public static WebApplication App;
     }
 }

@@ -139,7 +139,10 @@ namespace CrediBill_ASP.Data
                 }
 
                 Language.Languages = context.Language.Where(l => l.IsSystemLanguage && l.Code != "?").ToList();
+
+                Parameter.AddParameters(context, Globals.DefaultUser);
             }
+
         }
     }
 }

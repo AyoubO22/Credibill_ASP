@@ -23,6 +23,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Add Default Identity only once
 builder.Services.AddDefaultIdentity<CredibillUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
 
 //views language identification ask suffix
@@ -96,6 +97,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 var app = builder.Build();
+Globals.App = app;
 
 // Database seeding
 using (var scope = app.Services.CreateScope())
