@@ -4,7 +4,8 @@ using Credibill_ASP.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-   using System;
+
+using System;
 using GroupBudget_Web.ViewModels;
 
     namespace CrediBill_ASP.Data
@@ -48,7 +49,7 @@ using GroupBudget_Web.ViewModels;
                 .HasQueryFilter(p => p.Deleted == DateTime.MaxValue);
         }
 
-        public DbSet<Credibill_ASP.Models.Language> Language { get; set; }
+        public DbSet<Credibill_ASP.Models.Language> Language { get; set; } = default;
         public DbSet<Credibill_ASP.Models.Parameter> Parameter { get; set; } = default!;
         public DbSet<GroupBudget_Web.ViewModels.UserViewModel> UserViewModel { get; set; }
     }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Credibill_ASP.Data;
 using Credibill_ASP.Models;
+using CrediBill_ASP.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 

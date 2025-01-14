@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using NETCore.MailKit.Infrastructure.Internal;
+using CrediBill_ASP.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +58,12 @@ builder.Services.Configure<MailKitOptions>
     }
 );
 
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+builder.Services.AddMvc()
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)   // use languate identification as suffix
+    .AddDataAnnotationsLocalization();
+
 // Voeg de nodige services toe voor de API en Swagger
 builder.Services.AddControllers(); // Voor API-functionaliteit
 builder.Services.AddSwaggerGen(c =>
@@ -95,6 +102,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     options.SlidingExpiration = true;
 });
+
+builder.Services.AddTransient<IMyUser, MyUser>();
 
 var app = builder.Build();
 Globals.App = app;
